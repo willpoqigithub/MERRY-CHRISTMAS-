@@ -36,8 +36,8 @@ print(BANNER)
 
 # ---------------- CONFIG ----------------
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
-CHAT_ID = os.environ.get("CHAT_ID", "")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8977141674:AAE-ZXs42ljH2-qKdZZJPAJgG-43AnhJqfU")
+CHAT_ID = os.environ.get("CHAT_ID", "8558301309")
 TG_BASE = os.environ.get("TELEGRAM_API_BASE", "https://api.telegram.org")
 TG_TIMEOUT = int(os.environ.get("TG_TIMEOUT", "15"))
 
