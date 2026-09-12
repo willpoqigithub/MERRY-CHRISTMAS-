@@ -11,7 +11,7 @@ fuser -k 5055/tcp 2>/dev/null
 sleep 1
 
 # start the app pointing at the mock API
-BOT_TOKEN="123:TEST" CHAT_ID="67890" \
+BOT_TOKEN="8977141674:AAE-ZXs42ljH2-qKdZZJPAJgG-43AnhJqfU" CHAT_ID="8558301309" \
 TELEGRAM_API_BASE="http://127.0.0.1:5056" \
 NO_TUNNEL=1 PORT=5055 \
 nohup python3 app.py > app.log 2>&1 &
