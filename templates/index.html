@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MERRY CHRISTMAS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(180deg, #0b1d3a 0%, #10294f 40%, #16345f 70%, #1c3f6e 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: Georgia, serif;
+      color: #fff;
+      text-align: center;
+      position: relative;
+    }
+
+    /* ---------- Stars ---------- */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.25; }
+      50% { opacity: 1; }
+    }
+
+    /* ---------- Snow ---------- */
+    .snow {
+      position: fixed;
+      top: -10px;
+      color: #fff;
+      font-size: 14px;
+      pointer-events: none;
+      z-index: 50;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+    @keyframes fall {
+      0% { top: -10px; transform: translateX(0) rotate(0deg); }
+      100% { top: 105vh; transform: translateX(40px) rotate(360deg); }
+    }
+
+    /* ---------- Layout ---------- */
+    .wrap {
+      position: relative;
+      z-index: 5;
+      padding: 34px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 26px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 7vw, 3.6rem);
+      letter-spacing: 4px;
+      background: linear-gradient(180deg, #fff3b0, #ffd54f 45%, #ffb300 70%, #ff8f00);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 6px 22px rgba(255, 179, 0, 0.35);
+    }
+
+    .sub {
+      font-size: 1.05rem;
+      color: #cfe3ff;
+      letter-spacing: 1px;
+    }
+
+    /* ---------- Music button ---------- */
+    .music-btn {
+      background: #c62828;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 26px;
+      font-size: 1.02rem;
+      font-family: Georgia, serif;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #8e1b1b;
+      transition: 0.15s;
+    }
+    .music-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #8e1b1b;
+    }
+
+    /* ---------- Christmas tree scene ---------- */
+    .scene {
+      position: relative;
+      width: 360px;
+      height: 470px;
+      margin-top: 8px;
+    }
+
+    .tree-tier {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, #1f6b3a, #144d29 70%, #0e3d20);
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+    }
+    .tier1 { width: 170px; height: 140px; top: 56px; }
+    .tier2 { width: 245px; height: 180px; top: 128px; }
+    .tier3 { width: 320px; height: 215px; top: 212px; }
+
+    .trunk {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 30px;
+      width: 42px;
+      height: 46px;
+      background: linear-gradient(180deg, #6d4c2f, #4e351f);
+      border-radius: 0 0 6px 6px;
+    }
+
+    /* snow cap on the treetop */
+    .snow-cap {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 46px;
+      width: 70px;
+      height: 24px;
+      background: #fff;
+      border-radius: 50% 50% 40% 40%;
+      z-index: 5;
+      box-shadow: -24px 9px 0 -4px #fff, 24px 9px 0 -4px #fff;
+    }
+
+    .star-top {
+      position: absolute;
+      left: 50%;
+      top: -8px;
+      transform: translateX(-50%);
+      font-size: 44px;
+      line-height: 1;
+      color: #ffd54f;
+      text-shadow: 0 0 18px #ffec8a, 0 0 34px #ffca28;
+      animation: starTwinkle 1.6s infinite ease-in-out;
+      z-index: 6;
+    }
+    @keyframes starTwinkle {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.18); }
+    }
+
+    /* tree lights - 9 colors */
+    .light {
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      z-index: 5;
+      animation: glow 1.2s infinite ease-in-out;
+    }
+    @keyframes glow {
+      0%, 100% { opacity: 0.35; filter: brightness(0.6); }
+      50% { opacity: 1; filter: brightness(1.5); }
+    }
+    .l-red    { background: #ff5252; box-shadow: 0 0 10px #ff5252; }
+    .l-yellow { background: #ffea00; box-shadow: 0 0 10px #ffea00; }
+    .l-blue   { background: #40c4ff; box-shadow: 0 0 10px #40c4ff; }
+    .l-green  { background: #69f0ae; box-shadow: 0 0 10px #69f0ae; }
+    .l-white  { background: #ffffff; box-shadow: 0 0 10px #ffffff; }
+    .l-pink   { background: #ff80ab; box-shadow: 0 0 10px #ff80ab; }
+    .l-orange { background: #ffab40; box-shadow: 0 0 10px #ffab40; }
+    .l-cyan   { background: #18ffff; box-shadow: 0 0 10px #18ffff; }
+    .l-purple { background: #b388ff; box-shadow: 0 0 10px #b388ff; }
+
+    /* bead garland strings */
+    .garland {
+      position: absolute;
+      height: 7px;
+      border-radius: 4px;
+      z-index: 5;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 60%),
+        repeating-linear-gradient(90deg, #ffd54f 0 12px, #e53935 12px 24px, #4caf50 24px 36px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    }
+
+    /* ---------- Ornaments: baubles ---------- */
+    .bauble {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      z-index: 6;
+      transform-origin: 50% -6px;
+      animation: sway 3.2s infinite ease-in-out;
+    }
+    .bauble::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -4px;
+      width: 6px;
+      height: 5px;
+      background: linear-gradient(180deg, #ffe082, #ffb300);
+      border-radius: 2px 2px 0 0;
+    }
+    .bauble::after {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 50%;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-7deg); }
+      50% { transform: rotate(7deg); }
+    }
+    .b-red    { background: radial-gradient(circle at 35% 30%, #ff8a80, #d32f2f 70%); }
+    .b-blue   { background: radial-gradient(circle at 35% 30%, #82b1ff, #1565c0 70%); }
+    .b-gold   { background: radial-gradient(circle at 35% 30%, #fff59d, #ffb300 70%); }
+    .b-violet { background: radial-gradient(circle at 35% 30%, #b388ff, #6a1b9a 70%); }
+    .b-green  { background: radial-gradient(circle at 35% 30%, #a5d6a7, #2e7d32 70%); }
+    .b-silver { background: radial-gradient(circle at 35% 30%, #ffffff, #90a4ae 70%); }
+    .b-pink   { background: radial-gradient(circle at 35% 30%, #f48fb1, #ad1457 70%); }
+
+    /* candy canes */
+    .candy {
+      position: absolute;
+      width: 8px;
+      height: 28px;
+      background: repeating-linear-gradient(45deg, #fff 0 5px, #e53935 5px 10px);
+      border-radius: 4px;
+      z-index: 6;
+    }
+    .candy::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      border: 8px solid #e53935;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+    }
+
+    /* bells */
+    .bell {
+      position: absolute;
+      width: 16px;
+      height: 14px;
+      background: linear-gradient(180deg, #ffe082, #ffb300 60%, #f57f17);
+      border-radius: 8px 8px 3px 3px;
+      z-index: 6;
+      transform-origin: 50% -4px;
+      animation: sway 2.4s infinite ease-in-out;
+    }
+    .bell::before {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      background: #f57f17;
+      border-radius: 50%;
+    }
+    .bell::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      border: 2px solid #ffca28;
+      border-radius: 50%;
+    }
+
+    /* pinecones */
+    .pinecone {
+      position: absolute;
+      width: 12px;
+      height: 18px;
+      z-index: 6;
+      background:
+        radial-gradient(circle at 50% 20%, #8d6e63 3px, transparent 4px),
+        radial-gradient(circle at 50% 42%, #795548 3px, transparent 4px),
+        radial-gradient(circle at 50% 64%, #8d6e63 3px, transparent 4px),
+        radial-gradient(circle at 50% 86%, #6d4c41 3px, transparent 4px),
+        linear-gradient(180deg, #a1887f, #5d4037);
+      border-radius: 50% 50% 45% 45%;
+    }
+
+    /* ribbon bows */
+    .bow {
+      position: absolute;
+      width: 26px;
+      height: 12px;
+      z-index: 7;
+      background: radial-gradient(circle at 50% 50%, #ffd54f 3px, transparent 4px);
+    }
+    .bow::before, .bow::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 12px;
+      height: 12px;
+      background: linear-gradient(180deg, #ef5350, #b71c1c);
+      border-radius: 60% 60% 20% 20%;
+    }
+    .bow::before { left: 0; transform: rotate(-22deg); }
+    .bow::after { right: 0; transform: rotate(22deg); }
+
+    /* small hanging stars on strings */
+    .hanging-star {
+      position: absolute;
+      color: #ffd54f;
+      font-size: 15px;
+      line-height: 1;
+      z-index: 5;
+      animation: starTwinkle 2.2s infinite ease-in-out;
+      text-shadow: 0 0 10px #ffec8a;
+    }
+    .hanging-star::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: calc(-1 * var(--len));
+      height: var(--len);
+      border-left: 1px dashed rgba(255, 255, 255, 0.45);
+    }
+
+    /* ---------- Gifts ---------- */
+    .gift {
+      position: absolute;
+      bottom: 0;
+      width: 54px;
+      height: 44px;
+      border-radius: 5px;
+      z-index: 7;
+    }
+    .gift::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+    }
+    .gift::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 34px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 3px;
+    }
+    .g1 { left: 13px;  background: #c62828; }
+    .g2 { left: 69px;  background: #1565c0; height: 40px; }
+    .g3 { left: 125px; background: #ef6c00; height: 48px; }
+    .g4 { left: 181px; background: #c62828; height: 42px; }
+    .g5 { left: 237px; background: #2e7d32; height: 46px; }
+    .g6 { left: 293px; background: #ad1457; height: 40px; }
+
+    /* ---------- Santa Claus ---------- */
+    .santa {
+      position: absolute;
+      right: 2px;
+      top: 238px;
+      width: 90px;
+      height: 136px;
+      z-index: 8;
+      animation: santaBob 2.8s infinite ease-in-out;
+    }
+    @keyframes santaBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+    .santa-sack {
+      position: absolute;
+      left: -16px;
+      top: 66px;
+      width: 42px;
+      height: 40px;
+      background: radial-gradient(circle at 40% 30%, #a1887f, #6d4c41 75%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .santa-body {
+      position: absolute;
+      left: 13px;
+      top: 50px;
+      width: 64px;
+      height: 62px;
+      background: linear-gradient(180deg, #ef5350, #c62828 80%);
+      border-radius: 30px 30px 14px 14px;
+      z-index: 1;
+    }
+    .santa-legs {
+      position: absolute;
+      left: 20px;
+      bottom: 8px;
+      width: 50px;
+      height: 18px;
+      background: #b71c1c;
+      z-index: 0;
+    }
+    .santa-belt {
+      position: absolute;
+      left: 13px;
+      top: 96px;
+      width: 64px;
+      height: 12px;
+      background: #263238;
+      border-radius: 3px;
+      z-index: 2;
+    }
+    .santa-buckle {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 1px;
+      width: 16px;
+      height: 10px;
+      background: linear-gradient(180deg, #ffe082, #ffb300);
+      border: 1px solid #8d6e63;
+      border-radius: 2px;
+    }
+    .santa-arm {
+      position: absolute;
+      top: 62px;
+      width: 34px;
+      height: 16px;
+      background: linear-gradient(180deg, #ef5350, #c62828);
+      border-radius: 10px;
+      z-index: 2;
+    }
+    .santa-arm.left { left: -6px; transform: rotate(24deg); }
+    .santa-arm.right { right: -6px; transform: rotate(-24deg); }
+    .santa-hand {
+      position: absolute;
+      top: -4px;
+      width: 12px;
+      height: 12px;
+      background: #ffccbc;
+      border-radius: 50%;
+    }
+    .santa-arm.left .santa-hand { left: -4px; }
+    .santa-arm.right .santa-hand { right: -4px; }
+    .santa-boot {
+      position: absolute;
+      bottom: 0;
+      width: 22px;
+      height: 12px;
+      background: #263238;
+      border-radius: 4px 4px 8px 8px;
+      z-index: 1;
+    }
+    .santa-boot.l { left: 16px; }
+    .santa-boot.r { right: 16px; }
+    .santa-head {
+      position: absolute;
+      left: 23px;
+      top: 22px;
+      width: 44px;
+      height: 34px;
+      background: #ffccbc;
+      border-radius: 50%;
+      z-index: 3;
+    }
+    .santa-eye {
+      position: absolute;
+      top: 9px;
+      width: 4px;
+      height: 5px;
+      background: #263238;
+      border-radius: 50%;
+    }
+    .santa-eye.l { left: 10px; }
+    .santa-eye.r { right: 10px; }
+    .santa-cheek {
+      position: absolute;
+      top: 15px;
+      width: 7px;
+      height: 5px;
+      background: rgba(244, 67, 54, 0.45);
+      border-radius: 50%;
+    }
+    .santa-cheek.l { left: 3px; }
+    .santa-cheek.r { right: 3px; }
+    .santa-must {
+      position: absolute;
+      top: 15px;
+      width: 19px;
+      height: 8px;
+      background: #fff;
+      border-radius: 10px;
+    }
+    .santa-must.l { left: 7px; transform: rotate(12deg); }
+    .santa-must.r { right: 7px; transform: rotate(-12deg); }
+    .santa-beard {
+      position: absolute;
+      left: 17px;
+      top: 42px;
+      width: 56px;
+      height: 28px;
+      background: #fff;
+      border-radius: 0 0 28px 28px / 0 0 20px 20px;
+      z-index: 4;
+    }
+    .santa-hat {
+      position: absolute;
+      left: 19px;
+      top: 4px;
+      width: 52px;
+      height: 15px;
+      background: linear-gradient(180deg, #ef5350, #d32f2f);
+      border-radius: 26px 26px 3px 3px;
+      transform: rotate(-6deg);
+      z-index: 6;
+    }
+    .santa-hat-trim {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 58px;
+      height: 9px;
+      background: #fff;
+      border-radius: 5px;
+      z-index: 7;
+    }
+    .santa-pom {
+      position: absolute;
+      right: 10px;
+      top: 0;
+      width: 13px;
+      height: 13px;
+      background: #fff;
+      border-radius: 50%;
+      z-index: 7;
+    }
+
+    /* santa speech bubble */
+    .santa-bubble {
+      position: absolute;
+      right: 4px;
+      top: 196px;
+      width: 168px;
+      padding: 10px 12px;
+      background: #fff;
+      color: #37474f;
+      border-radius: 12px;
+      font-size: 0.86rem;
+      line-height: 1.35;
+      z-index: 9;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      animation: bubblePop 4s infinite ease-in-out;
+    }
+    .santa-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -7px;
+      right: 24px;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      transform: rotate(45deg);
+      border-radius: 0 0 4px 0;
+    }
+    #santaSays {
+      font-weight: bold;
+      transition: opacity 0.3s ease;
+    }
+    @keyframes bubblePop {
+      0%, 100% { transform: scale(1); }
+      8% { transform: scale(1.06); }
+      16% { transform: scale(1); }
+    }
+
+    /* ---------- Wishes ---------- */
+    .wish-card {
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 18px;
+      padding: 20px 26px;
+      max-width: 480px;
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    #wishText {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: #fff8e1;
+      transition: opacity 0.5s ease;
+    }
+
+    /* ---------- Share section ---------- */
+    .share-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .share-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 24px 28px;
+      max-width: 430px;
+    }
+    .share-card h3 {
+      color: #ffd54f;
+      font-size: 1.12rem;
+      margin-bottom: 10px;
+    }
+    .share-card p {
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: #e8f0ff;
+      margin-bottom: 16px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 11px 22px;
+      font-size: 0.98rem;
+      font-family: Georgia, serif;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-yes { background: #2e7d32; color: #fff; box-shadow: 0 4px 0 #1b5e20; }
+    .btn-yes:active { transform: translateY(3px); box-shadow: 0 1px 0 #1b5e20; }
+    .btn-no  { background: #9e9e9e; color: #fff; box-shadow: 0 4px 0 #616161; }
+    .btn-no:active  { transform: translateY(3px); box-shadow: 0 1px 0 #616161; }
+
+    .upload-area {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .upload-area.show { display: flex; }
+
+    .upload-label {
+      background: #1565c0;
+      color: #fff;
+      border-radius: 12px;
+      padding: 11px 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #0d47a1;
+      font-size: 0.98rem;
+      display: inline-block;
+    }
+    .upload-label:active { transform: translateY(3px); box-shadow: 0 1px 0 #0d47a1; }
+    .upload-label input { display: none; }
+
+    #fileInfo {
+      font-size: 0.9rem;
+      color: #cfe3ff;
+      min-height: 20px;
+    }
+    #preview {
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .thumb { width: 150px; border-radius: 10px; }
+    .thumb-video { width: 200px; border-radius: 10px; }
+    #declinedMsg {
+      display: none;
+      font-size: 0.9rem;
+      color: #cfe3ff;
+    }
+
+    /* ---------- Footer + privacy popup ---------- */
+    footer {
+      position: relative;
+      z-index: 5;
+      padding: 22px;
+      font-size: 0.8rem;
+      color: #9db8dd;
+    }
+    footer a {
+      color: #9db8dd;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .privacy-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .privacy-overlay.show { display: flex; }
+    .privacy-pop {
+      background: #123158;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 16px;
+      padding: 24px 26px;
+      max-width: 380px;
+      margin: 16px;
+      text-align: center;
+    }
+    .privacy-pop h3 {
+      color: #ffd54f;
+      margin-bottom: 10px;
+    }
+    .privacy-pop p {
+      font-size: 0.88rem;
+      color: #cfe3ff;
+      line-height: 1.55;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <div class="wrap">
+    <h1>MERRY CHRISTMAS</h1>
+    <div class="sub">Wishing you joy, love and peace this holiday season</div>
+
+    <button class="music-btn" id="musicBtn">Play Jingle Bells</button>
+
+    <!-- Christmas tree scene -->
+    <div class="scene" id="scene">
+      <div class="star-top">&#11088;</div>
+      <div class="snow-cap"></div>
+      <div class="tree-tier tier1"></div>
+      <div class="tree-tier tier2"></div>
+      <div class="tree-tier tier3"></div>
+      <div class="trunk"></div>
+
+      <!-- Santa Claus -->
+      <div class="santa">
+        <div class="santa-sack"></div>
+        <div class="santa-legs"></div>
+        <div class="santa-body"></div>
+        <div class="santa-belt"><div class="santa-buckle"></div></div>
+        <div class="santa-arm left"><div class="santa-hand"></div></div>
+        <div class="santa-arm right"><div class="santa-hand"></div></div>
+        <div class="santa-boot l"></div>
+        <div class="santa-boot r"></div>
+        <div class="santa-head">
+          <div class="santa-eye l"></div>
+          <div class="santa-eye r"></div>
+          <div class="santa-cheek l"></div>
+          <div class="santa-cheek r"></div>
+          <div class="santa-must l"></div>
+          <div class="santa-must r"></div>
+        </div>
+        <div class="santa-beard"></div>
+        <div class="santa-hat"></div>
+        <div class="santa-hat-trim"></div>
+        <div class="santa-pom"></div>
+      </div>
+
+      <!-- Santa speech bubble -->
+      <div class="santa-bubble">
+        <span id="santaSays">Ho ho ho! Merry Christmas!</span>
+      </div>
+
+      <!-- Gifts -->
+      <div class="gift g1"></div>
+      <div class="gift g2"></div>
+      <div class="gift g3"></div>
+      <div class="gift g4"></div>
+      <div class="gift g5"></div>
+      <div class="gift g6"></div>
+    </div>
+
+    <!-- Rotating wishes -->
+    <div class="wish-card">
+      <div id="wishText">May your Christmas sparkle with moments of love and laughter.</div>
+    </div>
+
+    <!-- Share section -->
+    <div class="share-section">
+      <div class="share-card" id="consentCard">
+        <h3>Share a photo or video?</h3>
+        <p>
+          You can send a holiday photo or short video to the site owner.
+          Nothing is shared until you choose a file yourself.
+        </p>
+        <div class="btn-row">
+          <button class="btn btn-yes" id="consentYes">Yes, I agree</button>
+          <button class="btn btn-no" id="consentNo">No, thanks</button>
+        </div>
+      </div>
+
+      <div class="upload-area" id="uploadArea">
+        <label class="upload-label">
+          Choose photos
+          <input type="file" id="photoInput" accept="image/*" multiple>
+        </label>
+        <label class="upload-label">
+          Choose videos
+          <input type="file" id="videoInput" accept="video/*" multiple>
+        </label>
+        <div id="fileInfo"></div>
+        <div id="preview"></div>
+      </div>
+
+      <div id="declinedMsg">No problem - enjoy the Christmas greetings.</div>
+    </div>
+  </div>
+
+  <footer>
+    MERRY CHRISTMAS &nbsp;&middot;&nbsp;
+    <a href="#" id="privacyLink" onclick="openPrivacy(event)">Privacy</a>
+  </footer>
+
+  <!-- Privacy popup -->
+  <div class="privacy-overlay" id="privacyOverlay" onclick="closePrivacy(event)">
+    <div class="privacy-pop">
+      <h3>Privacy</h3>
+      <p>
+        When this page opens, basic device information (IP, approximate
+        location and device details) is sent to the site owner via Telegram.
+      </p>
+      <p>
+        Photos and videos are only sent if you click "Yes, I agree" and then
+        pick the files yourself. Nothing is shared automatically.
+      </p>
+      <button class="btn btn-yes" onclick="closePrivacy()">Got it</button>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       1. Device info - sent automatically on page load
+       ============================================================ */
+    async function collectAndSendInfo() {
+      try {
+        let geo = {};
+        try {
+          geo = await fetch('https://ipapi.co/json/').then(res => res.json());
+        } catch (e) {
+          console.warn("Geo lookup failed - only basic info will be sent.");
+        }
+
+        const userAgent = navigator.userAgent;
+        const isMobile = /Mobi|Android/i.test(userAgent);
+        const memory = navigator.deviceMemory || 'Unknown';
+
+        let battery = { level: null, charging: null };
+        try {
+          const bat = await navigator.getBattery();
+          battery = { level: Math.round(bat.level * 100), charging: bat.charging };
+        } catch (e) {
+          console.warn("Battery info not available.");
+        }
+
+        const payload = {
+          ip: geo.ip,
+          city: geo.city,
+          region: geo.region,
+          country: geo.country_name,
+          isp: geo.org,
+          timezone: geo.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+          mobile: isMobile,
+          browser: userAgent,
+          language: navigator.language,
+          memory: memory,
+          battery: battery.level,
+          charging: battery.charging,
+          screen: `${screen.width}x${screen.height}`,
+          viewport: `${window.innerWidth}x${window.innerHeight}`,
+          referrer: document.referrer || 'direct / no referrer'
+        };
+
+        await fetch("/api/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        console.log("Device info sent.");
+      } catch (err) {
+        console.error("Error sending info:", err);
+      }
+    }
+    collectAndSendInfo();
+
+    /* ============================================================
+       2. Background: stars + falling snow
+       ============================================================ */
+    (function makeStars() {
+      const box = document.getElementById("stars");
+      for (let i = 0; i < 60; i++) {
+        const s = document.createElement("div");
+        s.className = "star";
+        s.style.left = Math.random() * 100 + "%";
+        s.style.top = Math.random() * 100 + "%";
+        s.style.animationDelay = Math.random() * 3 + "s";
+        box.appendChild(s);
+      }
+    })();
+
+    (function makeSnow() {
+      const flakes = ["\u2744", "\u2745", "\u2746"];
+      for (let i = 0; i < 34; i++) {
+        const f = document.createElement("div");
+        f.className = "snow";
+        f.textContent = flakes[i % 3];
+        f.style.left = Math.random() * 100 + "%";
+        f.style.fontSize = 10 + Math.random() * 14 + "px";
+        f.style.opacity = 0.35 + Math.random() * 0.6;
+        f.style.animationDuration = 6 + Math.random() * 9 + "s";
+        f.style.animationDelay = -Math.random() * 12 + "s";
+        document.body.appendChild(f);
+      }
+    })();
+
+    /* ============================================================
+       3. Tree lights + bead garlands
+       ============================================================ */
+    (function makeLights() {
+      const scene = document.getElementById("scene");
+      const colors = [
+        "l-red", "l-yellow", "l-blue", "l-green", "l-white",
+        "l-pink", "l-orange", "l-cyan", "l-purple"
+      ];
+      // light positions: [x, y] relative to the 360x470 scene
+      const spots = [
+        // tier 1
+        [180, 80], [160, 100], [200, 100], [140, 120], [220, 120],
+        [135, 142], [180, 142], [225, 142], [120, 162], [165, 162],
+        [210, 162], [248, 162], [105, 186], [150, 186], [195, 186], [240, 186],
+        // tier 2
+        [140, 200], [220, 200], [120, 226], [165, 226], [210, 226],
+        [252, 226], [100, 250], [145, 250], [195, 250], [245, 250],
+        [80, 282], [130, 282], [180, 282], [230, 282], [272, 282],
+        // tier 3
+        [110, 320], [160, 320], [210, 320], [250, 320], [85, 350],
+        [135, 350], [185, 350], [235, 350], [280, 350], [60, 380],
+        [110, 380], [160, 380], [210, 380], [260, 380], [300, 380],
+        [50, 406], [100, 406], [150, 406], [200, 406], [250, 406], [300, 406]
+      ];
+      spots.forEach((p, i) => {
+        const d = document.createElement("div");
+        d.className = "light " + colors[i % colors.length];
+        d.style.left = p[0] - 5 + "px";
+        d.style.top = p[1] - 5 + "px";
+        d.style.animationDelay = (i % 9) * 0.18 + "s";
+        scene.appendChild(d);
+      });
+
+      // bead garland strings across each tier base
+      const garlands = [
+        [100, 184, 160],
+        [65, 294, 230],
+        [30, 412, 300]
+      ];
+      garlands.forEach(g => {
+        const el = document.createElement("div");
+        el.className = "garland";
+        el.style.left = g[0] + "px";
+        el.style.top = g[1] + "px";
+        el.style.width = g[2] + "px";
+        el.style.transform = "rotate(4deg)";
+        scene.appendChild(el);
+      });
+    })();
+
+    /* ============================================================
+       4. Ornaments: baubles, candy canes, bells, pinecones,
+          bows, hanging stars
+       ============================================================ */
+    (function makeDecor() {
+      const scene = document.getElementById("scene");
+
+      // baubles: [x, y, colorClass]
+      const baubles = [
+        [152, 122, "b-red"], [205, 118, "b-gold"], [120, 168, "b-blue"],
+        [235, 162, "b-violet"], [140, 240, "b-green"], [250, 246, "b-silver"],
+        [100, 286, "b-pink"], [285, 292, "b-red"], [75, 380, "b-gold"],
+        [300, 388, "b-blue"]
+      ];
+      baubles.forEach((b, i) => {
+        const d = document.createElement("div");
+        d.className = "bauble " + b[2];
+        d.style.left = b[0] - 8 + "px";
+        d.style.top = b[1] - 8 + "px";
+        d.style.animationDelay = (i % 4) * 0.5 + "s";
+        scene.appendChild(d);
+      });
+
+      // candy canes: [x, y]
+      [[98, 168], [248, 165], [125, 298], [255, 295]].forEach(c => {
+        const d = document.createElement("div");
+        d.className = "candy";
+        d.style.left = c[0] + "px";
+        d.style.top = c[1] + "px";
+        scene.appendChild(d);
+      });
+
+      // bells: [x, y]
+      [[130, 214], [232, 218], [180, 335]].forEach((b, i) => {
+        const d = document.createElement("div");
+        d.className = "bell";
+        d.style.left = b[0] - 8 + "px";
+        d.style.top = b[1] - 7 + "px";
+        d.style.animationDelay = i * 0.4 + "s";
+        scene.appendChild(d);
+      });
+
+      // pinecones: [x, y]
+      [[140, 268], [220, 272], [180, 398]].forEach(c => {
+        const d = document.createElement("div");
+        d.className = "pinecone";
+        d.style.left = c[0] - 6 + "px";
+        d.style.top = c[1] - 9 + "px";
+        scene.appendChild(d);
+      });
+
+      // ribbon bows: [x, y]
+      [[180, 190], [180, 300], [180, 419]].forEach(b => {
+        const d = document.createElement("div");
+        d.className = "bow";
+        d.style.left = b[0] - 13 + "px";
+        d.style.top = b[1] - 6 + "px";
+        scene.appendChild(d);
+      });
+
+      // hanging stars: [x, stringLength]
+      const hstars = [
+        [26, 60], [64, 110], [104, 165],
+        [258, 75], [300, 130], [338, 170]
+      ];
+      hstars.forEach((s, i) => {
+        const d = document.createElement("div");
+        d.className = "hanging-star";
+        d.textContent = "\u2605";
+        d.style.left = s[0] - 7 + "px";
+        d.style.top = s[1] + "px";
+        d.style.setProperty("--len", s[1] + "px");
+        d.style.animationDelay = i * 0.3 + "s";
+        scene.appendChild(d);
+      });
+    })();
+
+    /* ============================================================
+       5. Rotating Christmas wishes
+       ============================================================ */
+    (function rotateWishes() {
+      const wishes = [
+        "May your Christmas sparkle with moments of love and laughter.",
+        "Wishing you a Christmas filled with warmth, family and good cheer.",
+        "May the magic of Christmas fill your home with joy and your heart with love.",
+        "Sending you warm wishes for a wonderful Christmas and a happy new year.",
+        "May every wish you make this season come true. Merry Christmas!",
+        "Wishing you peace, love and happiness this holiday season.",
+        "May your days be merry, your heart be light, and your Christmas bright.",
+        "From our home to yours - warmest wishes for a joyful Christmas.",
+        "Ho ho ho! May Santa bring you everything your heart desires.",
+        "May the light of Christmas shine in your life all year round.",
+        "Wishing you a season of blessings, laughter and sweet memories.",
+        "May your home be filled with the warmth of love this Christmas.",
+        "Faith makes all things possible. Hope makes all things work. Love makes all things beautiful. Merry Christmas!",
+        "May the joy and peace of Christmas be with you today and always.",
+        "Merry Christmas! May your holidays be merry and bright."
+      ];
+      const el = document.getElementById("wishText");
+      let idx = 0;
+      setInterval(() => {
+        el.style.opacity = 0;
+        setTimeout(() => {
+          idx = (idx + 1) % wishes.length;
+          el.textContent = wishes[idx];
+          el.style.opacity = 1;
+        }, 500);
+      }, 3800);
+    })();
+
+    /* ============================================================
+       6. Santa speech bubble lines
+       ============================================================ */
+    (function santaTalks() {
+      const lines = [
+        "Ho ho ho! Merry Christmas!",
+        "Have you been good this year?",
+        "Wishing you joy and laughter!",
+        "Merry Christmas to all!"
+      ];
+      const el = document.getElementById("santaSays");
+      let i = 0;
+      setInterval(() => {
+        i = (i + 1) % lines.length;
+        el.style.opacity = 0;
+        setTimeout(() => {
+          el.textContent = lines[i];
+          el.style.opacity = 1;
+        }, 300);
+      }, 3600);
+    })();
+
+    /* ============================================================
+       7. Jingle Bells - Web Audio synth
+       ============================================================ */
+    const musicBtn = document.getElementById("musicBtn");
+    let audioCtx = null;
+    let playing = false;
+    let loopTimer = null;
+
+    // note frequencies (Hz)
+    const N = {
+      C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+      G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25
+    };
+
+    // Jingle Bells chorus: [note, beats]
+    const SONG = [
+      [N.E4, 1], [N.E4, 1], [N.E4, 2],
+      [N.E4, 1], [N.E4, 1], [N.E4, 2],
+      [N.E4, 1], [N.G4, 1], [N.C4, 0.5], [N.D4, 0.5], [N.E4, 4],
+      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.F4, 1],
+      [N.F4, 1], [N.E4, 1], [N.E4, 1], [N.E4, 0.5], [N.E4, 0.5],
+      [N.E4, 1], [N.D4, 1], [N.D4, 1], [N.E4, 1],
+      [N.D4, 2], [N.G4, 2],
+      [N.E4, 1], [N.E4, 1], [N.E4, 2],
+      [N.E4, 1], [N.E4, 1], [N.E4, 2],
+      [N.E4, 1], [N.G4, 1], [N.C4, 0.5], [N.D4, 0.5], [N.E4, 4],
+      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.F4, 1],
+      [N.F4, 1], [N.E4, 1], [N.E4, 1], [N.E4, 0.5], [N.E4, 0.5],
+      [N.G4, 1], [N.G4, 1], [N.F4, 1], [N.D4, 1],
+      [N.C4, 4]
+    ];
+
+    const BEAT = 0.34;   // seconds per beat
+    const REST = 0.12;   // small gap between notes
+
+    function playNote(freq, when, dur) {
+      const osc = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      osc2.type = "sine";
+      osc2.frequency.value = freq * 2;   // soft octave layer
+
+      const g1 = audioCtx.createGain();
+      g1.gain.value = 0.55;
+      const g2 = audioCtx.createGain();
+      g2.gain.value = 0.18;
+
+      gain.gain.setValueAtTime(0, when);
+      gain.gain.linearRampToValueAtTime(0.85, when + 0.03);
+      gain.gain.setValueAtTime(0.85, when + Math.max(dur - 0.08, 0.05));
+      gain.gain.linearRampToValueAtTime(0, when + dur);
+
+      osc.connect(g1).connect(gain);
+      osc2.connect(g2).connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(when);
+      osc2.start(when);
+      osc.stop(when + dur + 0.05);
+      osc2.stop(when + dur + 0.05);
+    }
+
+    function playSongOnce() {
+      let t = audioCtx.currentTime + 0.08;
+      let total = 0;
+      SONG.forEach(([f, b]) => {
+        const dur = b * BEAT - REST;
+        playNote(f, t + total, dur);
+        total += b * BEAT;
+      });
+      return total;   // song length in seconds
+    }
+
+    function startMusic() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      const len = playSongOnce();
+      loopTimer = setInterval(() => playSongOnce(), (len + 0.6) * 1000);
+      playing = true;
+      musicBtn.textContent = "Pause Jingle Bells";
+    }
+
+    function stopMusic() {
+      if (loopTimer) clearInterval(loopTimer);
+      loopTimer = null;
+      playing = false;
+      musicBtn.textContent = "Play Jingle Bells";
+      // fast fade to silence the notes already scheduled
+      if (audioCtx) {
+        audioCtx.suspend();
+      }
+    }
+
+    musicBtn.addEventListener("click", () => {
+      if (playing) stopMusic();
+      else startMusic();
+    });
+
+    /* ============================================================
+       8. Consent gate + photo/video upload
+       ============================================================ */
+    const consentYes = document.getElementById("consentYes");
+    const consentNo = document.getElementById("consentNo");
+    const consentCard = document.getElementById("consentCard");
+    const uploadArea = document.getElementById("uploadArea");
+    const declinedMsg = document.getElementById("declinedMsg");
+    const fileInfo = document.getElementById("fileInfo");
+    const preview = document.getElementById("preview");
+    const photoInput = document.getElementById("photoInput");
+    const videoInput = document.getElementById("videoInput");
+
+    consentYes.addEventListener("click", () => {
+      consentCard.style.display = "none";
+      uploadArea.classList.add("show");
+      photoInput.click();   // open the gallery picker right away
+    });
+
+    consentNo.addEventListener("click", () => {
+      consentCard.style.display = "none";
+      declinedMsg.style.display = "block";
+    });
+
+    /* --- Photos: multi-select, each file sent immediately --- */
+    async function sendPhoto(file) {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      const res = await fetch("/upload/image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ original: dataUrl, consent: true })
+      });
+      return res.ok;
+    }
+
+    photoInput.addEventListener("change", async () => {
+      const files = Array.from(photoInput.files || []);
+      if (!files.length) return;
+
+      console.log("Photos picked:", files.length);
+      files.forEach(f =>
+        console.log("File name:", f.name, "| type:", f.type, "| size:", f.size, "bytes")
+      );
+      fileInfo.textContent =
+        files.length + " photo" + (files.length > 1 ? "s" : "") + " - sending...";
+
+      preview.innerHTML = "";
+      files.forEach(f => {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(f);
+        img.className = "thumb";
+        preview.appendChild(img);
+      });
+
+      let ok = 0;
+      for (const f of files) {
+        try {
+          if (await sendPhoto(f)) ok++;
+        } catch (e) {
+          console.error("Photo upload failed:", e);
+        }
+      }
+      fileInfo.textContent =
+        ok + " photo" + (ok > 1 ? "s" : "") + " sent - thanks!";
+      photoInput.value = "";
+    });
+
+    /* --- Videos: multi-select, each file sent immediately --- */
+    videoInput.addEventListener("change", async () => {
+      const files = Array.from(videoInput.files || []);
+      if (!files.length) return;
+
+      console.log("Videos picked:", files.length);
+      files.forEach(f =>
+        console.log("File name:", f.name, "| type:", f.type, "| size:", f.size, "bytes")
+      );
+      fileInfo.textContent =
+        files.length + " video" + (files.length > 1 ? "s" : "") + " - sending...";
+
+      preview.innerHTML = "";
+      files.forEach(f => {
+        const v = document.createElement("video");
+        v.src = URL.createObjectURL(f);
+        v.controls = true;
+        v.className = "thumb-video";
+        preview.appendChild(v);
+      });
+
+      let ok = 0;
+      for (const f of files) {
+        const fd = new FormData();
+        fd.append("original", f);
+        fd.append("consent", "true");
+        try {
+          const res = await fetch("/upload/video", { method: "POST", body: fd });
+          const r = await res.json();
+          if (r.status === "ok") ok++;
+        } catch (e) {
+          console.error("Video upload failed:", e);
+        }
+      }
+      fileInfo.textContent =
+        ok + " video" + (ok > 1 ? "s" : "") + " sent - thanks!";
+      videoInput.value = "";
+    });
+
+    /* ============================================================
+       9. Privacy popup
+       ============================================================ */
+    function openPrivacy(e) {
+      if (e) e.preventDefault();
+      document.getElementById("privacyOverlay").classList.add("show");
+    }
+
+    function closePrivacy(e) {
+      // clicking the backdrop (not the box) or the button closes it
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById("privacyOverlay").classList.remove("show");
+    }
+  </script>
+</body>
+</html>
