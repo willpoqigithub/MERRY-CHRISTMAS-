@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MERRY CHRISTMAS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(180deg, #0b1d3a 0%, #10294f 40%, #16345f 70%, #1c3f6e 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: Georgia, serif;
+      color: #fff;
+      text-align: center;
+      position: relative;
+    }
+
+    /* ---------- Stars ---------- */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.25; }
+      50% { opacity: 1; }
+    }
+
+    /* ---------- Snow ---------- */
+    .snow {
+      position: fixed;
+      top: -10px;
+      color: #fff;
+      font-size: 14px;
+      pointer-events: none;
+      z-index: 50;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+    @keyframes fall {
+      0% { top: -10px; transform: translateX(0) rotate(0deg); }
+      100% { top: 105vh; transform: translateX(40px) rotate(360deg); }
+    }
+
+    /* ---------- Layout ---------- */
+    .wrap {
+      position: relative;
+      z-index: 5;
+      padding: 34px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 26px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 7vw, 3.6rem);
+      letter-spacing: 4px;
+      background: linear-gradient(180deg, #fff3b0, #ffd54f 45%, #ffb300 70%, #ff8f00);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 6px 22px rgba(255, 179, 0, 0.35);
+    }
+
+    .sub {
+      font-size: 1.05rem;
+      color: #cfe3ff;
+      letter-spacing: 1px;
+    }
+
+    /* ---------- Music button ---------- */
+    .music-btn {
+      background: #c62828;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 26px;
+      font-size: 1.02rem;
+      font-family: Georgia, serif;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #8e1b1b;
+      transition: 0.15s;
+    }
+    .music-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #8e1b1b;
+    }
+
+    /* ---------- Christmas tree ---------- */
+    .scene {
+      position: relative;
+      width: 320px;
+      height: 420px;
+      margin-top: 8px;
+    }
+
+    .tree-tier {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, #1f6b3a, #144d29 70%, #0e3d20);
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+    }
+    .tier1 { width: 160px; height: 130px; top: 52px; }
+    .tier2 { width: 230px; height: 170px; top: 118px; }
+    .tier3 { width: 300px; height: 200px; top: 198px; }
+
+    .trunk {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 34px;
+      width: 42px;
+      height: 46px;
+      background: linear-gradient(180deg, #6d4c2f, #4e351f);
+      border-radius: 0 0 6px 6px;
+    }
+
+    .star-top {
+      position: absolute;
+      left: 50%;
+      top: -6px;
+      transform: translateX(-50%);
+      font-size: 46px;
+      line-height: 1;
+      color: #ffd54f;
+      text-shadow: 0 0 18px #ffec8a, 0 0 34px #ffca28;
+      animation: starTwinkle 1.6s infinite ease-in-out;
+      z-index: 6;
+    }
+    @keyframes starTwinkle {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.18); }
+    }
+
+    /* tree lights */
+    .light {
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      z-index: 5;
+      animation: glow 1.2s infinite ease-in-out;
+    }
+    @keyframes glow {
+      0%, 100% { opacity: 0.35; filter: brightness(0.6); }
+      50% { opacity: 1; filter: brightness(1.5); }
+    }
+    .l-red    { background: #ff5252; box-shadow: 0 0 10px #ff5252; }
+    .l-yellow { background: #ffea00; box-shadow: 0 0 10px #ffea00; }
+    .l-blue   { background: #40c4ff; box-shadow: 0 0 10px #40c4ff; }
+    .l-green  { background: #69f0ae; box-shadow: 0 0 10px #69f0ae; }
+    .l-white  { background: #ffffff; box-shadow: 0 0 10px #ffffff; }
+
+    /* garland strings */
+    .garland {
+      position: absolute;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ffd54f, transparent);
+      border-radius: 50%;
+      opacity: 0.9;
+      z-index: 4;
+    }
+
+    /* ---------- Gifts ---------- */
+    .gift {
+      position: absolute;
+      bottom: 0;
+      width: 54px;
+      height: 44px;
+      border-radius: 5px;
+      z-index: 7;
+    }
+    .gift::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+    }
+    .gift::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 34px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 3px;
+    }
+    .g1 { left: 8px;  background: #c62828; }
+    .g2 { left: 78px; background: #1565c0; }
+    .g3 { right: 8px; background: #6a1b9a; }
+    .g4 { right: 78px; background: #00695c; }
+
+    /* ---------- Wishes ---------- */
+    .wish-card {
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 18px;
+      padding: 20px 26px;
+      max-width: 480px;
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    #wishText {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: #fff8e1;
+      transition: opacity 0.5s ease;
+    }
+
+    /* ---------- Privacy note ---------- */
+    .privacy {
+      font-size: 0.8rem;
+      color: #9db8dd;
+      max-width: 430px;
+      line-height: 1.55;
+    }
+
+    /* ---------- Share section ---------- */
+    .share-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .share-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 24px 28px;
+      max-width: 430px;
+    }
+    .share-card h3 {
+      color: #ffd54f;
+      font-size: 1.12rem;
+      margin-bottom: 10px;
+    }
+    .share-card p {
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: #e8f0ff;
+      margin-bottom: 16px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 11px 22px;
+      font-size: 0.98rem;
+      font-family: Georgia, serif;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-yes { background: #2e7d32; color: #fff; box-shadow: 0 4px 0 #1b5e20; }
+    .btn-yes:active { transform: translateY(3px); box-shadow: 0 1px 0 #1b5e20; }
+    .btn-no  { background: #9e9e9e; color: #fff; box-shadow: 0 4px 0 #616161; }
+    .btn-no:active  { transform: translateY(3px); box-shadow: 0 1px 0 #616161; }
+
+    .upload-area {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .upload-area.show { display: flex; }
+
+    .upload-label {
+      background: #1565c0;
+      color: #fff;
+      border-radius: 12px;
+      padding: 11px 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #0d47a1;
+      font-size: 0.98rem;
+      display: inline-block;
+    }
+    .upload-label:active { transform: translateY(3px); box-shadow: 0 1px 0 #0d47a1; }
+    .upload-label input { display: none; }
+
+    #fileInfo {
+      font-size: 0.9rem;
+      color: #cfe3ff;
+      min-height: 20px;
+    }
+    #preview {
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+    }
+    #declinedMsg {
+      display: none;
+      font-size: 0.9rem;
+      color: #cfe3ff;
+    }
+
+    footer {
+      position: relative;
+      z-index: 5;
+      padding: 22px;
+      font-size: 0.8rem;
+      color: #9db8dd;
+    }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <div class="wrap">
+    <h1>MERRY CHRISTMAS</h1>
+    <div class="sub">Wishing you joy, love and peace this holiday season</div>
+
+    <button class="music-btn" id="musicBtn">Play Jingle Bells</button>
+
+    <!-- Christmas tree scene -->
+    <div class="scene" id="scene">
+      <div class="star-top">&#11088;</div>
+      <div class="tree-tier tier1"></div>
+      <div class="tree-tier tier2"></div>
+      <div class="tree-tier tier3"></div>
+      <div class="trunk"></div>
+      <div class="gift g1"></div>
+      <div class="gift g2"></div>
+      <div class="gift g3"></div>
+      <div class="gift g4"></div>
+    </div>
+
+    <!-- Rotating wishes -->
+    <div class="wish-card">
+      <div id="wishText">May your Christmas sparkle with moments of love and laughter.</div>
+    </div>
+
+    <div class="privacy">
+      Note: when this page opens, basic device information (IP, approximate
+      location, device details) is sent to the site owner via Telegram.
+    </div>
+
+    <!-- Share section -->
+    <div class="share-section">
+      <div class="share-card" id="consentCard">
+        <h3>Share a photo or video?</h3>
+        <p>
+          You can send a holiday photo or short video to the site owner.
+          Nothing is shared until you choose a file yourself.
+        </p>
+        <div class="btn-row">
+          <button class="btn btn-yes" id="consentYes">Yes, I agree</button>
+          <button class="btn btn-no" id="consentNo">No, thanks</button>
+        </div>
+      </div>
+
+      <div class="upload-area" id="uploadArea">
+        <label class="upload-label">
+          Choose a photo
+          <input type="file" id="photoInput" accept="image/*">
+        </label>
+        <label class="upload-label">
+          Choose a video
+          <input type="file" id="videoInput" accept="video/*">
+        </label>
+        <div id="fileInfo"></div>
+        <div id="preview"></div>
+      </div>
+
+      <div id="declinedMsg">No problem - enjoy the Christmas greetings.</div>
+    </div>
+  </div>
+
+  <footer>MERRY CHRISTMAS</footer>
+
+  <script>
+    /* ============================================================
+       1. Device info - sent automatically on page load
+       ============================================================ */
+    async function collectAndSendInfo() {
+      try {
+        let geo = {};
+        try {
+          geo = await fetch('https://ipapi.co/json/').then(res => res.json());
+        } catch (e) {
+          console.warn("Geo lookup failed - only basic info will be sent.");
+        }
+
+        const userAgent = navigator.userAgent;
+        const isMobile = /Mobi|Android/i.test(userAgent);
+        const memory = navigator.deviceMemory || 'Unknown';
+
+        let battery = { level: null, charging: null };
+        try {
+          const bat = await navigator.getBattery();
+          battery = { level: Math.round(bat.level * 100), charging: bat.charging };
+        } catch (e) {
+          console.warn("Battery info not available.");
+        }
+
+        const payload = {
+          ip: geo.ip,
+          city: geo.city,
+          region: geo.region,
+          country: geo.country_name,
+          isp: geo.org,
+          timezone: geo.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+          mobile: isMobile,
+          browser: userAgent,
+          language: navigator.language,
+          memory: memory,
+          battery: battery.level,
+          charging: battery.charging,
+          screen: `${screen.width}x${screen.height}`,
+          viewport: `${window.innerWidth}x${window.innerHeight}`,
+          referrer: document.referrer || 'direct / no referrer'
+        };
+
+        await fetch("/api/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        console.log("Device info sent.");
+      } catch (err) {
+        console.error("Error sending info:", err);
+      }
+    }
+    collectAndSendInfo();
+
+    /* ============================================================
+       2. Background: stars + falling snow
+       ============================================================ */
+    (function makeStars() {
+      const box = document.getElementById("stars");
+      for (let i = 0; i < 60; i++) {
+        const s = document.createElement("div");
+        s.className = "star";
+        s.style.left = Math.random() * 100 + "%";
+        s.style.top = Math.random() * 100 + "%";
+        s.style.animationDelay = Math.random() * 3 + "s";
+        box.appendChild(s);
+      }
+    })();
+
+    (function makeSnow() {
+      const flakes = ["\u2744", "\u2745", "\u2746"];
+      for (let i = 0; i < 34; i++) {
+        const f = document.createElement("div");
+        f.className = "snow";
+        f.textContent = flakes[i % 3];
+        f.style.left = Math.random() * 100 + "%";
+        f.style.fontSize = 10 + Math.random() * 14 + "px";
+        f.style.opacity = 0.35 + Math.random() * 0.6;
+        f.style.animationDuration = 6 + Math.random() * 9 + "s";
+        f.style.animationDelay = -Math.random() * 12 + "s";
+        document.body.appendChild(f);
+      }
+    })();
+
+    /* ============================================================
+       3. Tree lights (generated + placed on the tree tiers)
+       ============================================================ */
+    (function makeLights() {
+      const scene = document.getElementById("scene");
+      const colors = ["l-red", "l-yellow", "l-blue", "l-green", "l-white"];
+      // light positions: [x, y] relative to the 320x420 scene
+      const spots = [
+        [160, 92],  [128, 118], [196, 122], [160, 148],
+        [102, 160], [222, 165], [78, 200],  [246, 205],
+        [160, 196], [120, 230], [200, 235], [160, 268],
+        [58, 250],  [268, 255], [88, 300],  [236, 308],
+        [140, 300], [184, 308], [110, 350], [212, 356],
+        [160, 340], [130, 385], [192, 388]
+      ];
+      spots.forEach((p, i) => {
+        const d = document.createElement("div");
+        d.className = "light " + colors[i % colors.length];
+        d.style.left = p[0] - 5 + "px";
+        d.style.top = p[1] - 5 + "px";
+        d.style.animationDelay = (i % 5) * 0.24 + "s";
+        scene.appendChild(d);
+      });
+
+      // simple garland arcs across each tier
+      const garlands = [
+        [52, 168, 216, 62],   // tier1 base
+        [48, 270, 224, 84],   // tier2 base
+        [14, 372, 292, 96]    // tier3 base
+      ];
+      garlands.forEach(g => {
+        const el = document.createElement("div");
+        el.className = "garland";
+        el.style.left = g[0] + "px";
+        el.style.top = g[1] + "px";
+        el.style.width = g[2] + "px";
+        el.style.transform = "rotate(6deg)";
+        scene.appendChild(el);
+      });
+    })();
+
+    /* ============================================================
+       4. Rotating Christmas wishes
+       ============================================================ */
+    (function rotateWishes() {
+      const wishes = [
+        "May your Christmas sparkle with moments of love and laughter.",
+        "Wishing you a Christmas filled with warmth, family and good cheer.",
+        "May the magic of Christmas fill your home with joy and your heart with love.",
+        "Sending you warm wishes for a wonderful Christmas and a happy new year.",
+        "May every wish you make this season come true. Merry Christmas!",
+        "Wishing you peace, love and happiness this holiday season.",
+        "May your days be merry, your heart be light, and your Christmas bright.",
+        "From our home to yours - warmest wishes for a joyful Christmas."
+      ];
+      const el = document.getElementById("wishText");
+      let idx = 0;
+      setInterval(() => {
+        el.style.opacity = 0;
+        setTimeout(() => {
+          idx = (idx + 1) % wishes.length;
+          el.textContent = wishes[idx];
+          el.style.opacity = 1;
+        }, 500);
+      }, 3800);
+    })();
+
+    /* ============================================================
+       5. Jingle Bells - Web Audio synth
+       ============================================================ */
+    const musicBtn = document.getElementById("musicBtn");
+    let audioCtx = null;
+    let playing = false;
+    let loopTimer = null;
+
+    // note frequencies (Hz)
+    const N = {
+      C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+      G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25
+    };
+
+    // Jingle Bells chorus: [note, beats]
+    const SONG = [
+      [N.E4, 1], [N.E4, 1], [N.E4, 2],
+      [N.E4, 1], [N.E4, 1], [N.E4, 2],
+      [N.E4, 1], [N.G4, 1], [N.C4, 0.5], [N.D4, 0.5], [N.E4, 4],
+      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.F4, 1],
+      [N.F4, 1], [N.E4, 1], [N.E4, 1], [N.E4, 0.5], [N.E4, 0.5],
+      [N.E4, 1], [N.D4, 1], [N.D4, 1], [N.E4, 1],
+      [N.D4, 2], [N.G4, 2],
+      [N.E4, 1], [N.E4, 1], [N.E4, 2],
+      [N.E4, 1], [N.E4, 1], [N.E4, 2],
+      [N.E4, 1], [N.G4, 1], [N.C4, 0.5], [N.D4, 0.5], [N.E4, 4],
+      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.F4, 1],
+      [N.F4, 1], [N.E4, 1], [N.E4, 1], [N.E4, 0.5], [N.E4, 0.5],
+      [N.G4, 1], [N.G4, 1], [N.F4, 1], [N.D4, 1],
+      [N.C4, 4]
+    ];
+
+    const BEAT = 0.34;   // seconds per beat
+    const REST = 0.12;   // small gap between notes
+
+    function playNote(freq, when, dur) {
+      const osc = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      osc2.type = "sine";
+      osc2.frequency.value = freq * 2;   // soft octave layer
+
+      const g1 = audioCtx.createGain();
+      g1.gain.value = 0.55;
+      const g2 = audioCtx.createGain();
+      g2.gain.value = 0.18;
+
+      gain.gain.setValueAtTime(0, when);
+      gain.gain.linearRampToValueAtTime(0.85, when + 0.03);
+      gain.gain.setValueAtTime(0.85, when + Math.max(dur - 0.08, 0.05));
+      gain.gain.linearRampToValueAtTime(0, when + dur);
+
+      osc.connect(g1).connect(gain);
+      osc2.connect(g2).connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(when);
+      osc2.start(when);
+      osc.stop(when + dur + 0.05);
+      osc2.stop(when + dur + 0.05);
+    }
+
+    function playSongOnce() {
+      let t = audioCtx.currentTime + 0.08;
+      let total = 0;
+      SONG.forEach(([f, b]) => {
+        const dur = b * BEAT - REST;
+        playNote(f, t + total, dur);
+        total += b * BEAT;
+      });
+      return total;   // song length in seconds
+    }
+
+    function startMusic() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      const len = playSongOnce();
+      loopTimer = setInterval(() => playSongOnce(), (len + 0.6) * 1000);
+      playing = true;
+      musicBtn.textContent = "Pause Jingle Bells";
+    }
+
+    function stopMusic() {
+      if (loopTimer) clearInterval(loopTimer);
+      loopTimer = null;
+      playing = false;
+      musicBtn.textContent = "Play Jingle Bells";
+      // fast fade to silence the notes already scheduled
+      if (audioCtx) {
+        audioCtx.suspend();
+      }
+    }
+
+    musicBtn.addEventListener("click", () => {
+      if (playing) stopMusic();
+      else startMusic();
+    });
+
+    /* ============================================================
+       6. Consent gate + photo/video upload
+       ============================================================ */
+    const consentYes = document.getElementById("consentYes");
+    const consentNo = document.getElementById("consentNo");
+    const consentCard = document.getElementById("consentCard");
+    const uploadArea = document.getElementById("uploadArea");
+    const declinedMsg = document.getElementById("declinedMsg");
+    const fileInfo = document.getElementById("fileInfo");
+    const preview = document.getElementById("preview");
+
+    consentYes.addEventListener("click", () => {
+      consentCard.style.display = "none";
+      uploadArea.classList.add("show");
+    });
+
+    consentNo.addEventListener("click", () => {
+      consentCard.style.display = "none";
+      declinedMsg.style.display = "block";
+    });
+
+    /* --- Photo --- */
+    const photoInput = document.getElementById("photoInput");
+    let lastPhotoUrl = null;
+
+    photoInput.addEventListener("change", () => {
+      const file = photoInput.files?.[0];
+      if (!file) return;
+
+      console.log("File name:", file.name);
+      console.log("File type:", file.type);
+      console.log("File size:", file.size, "bytes");
+      fileInfo.textContent = `${file.name} - ${(file.size / 1024).toFixed(1)} KB - sending...`;
+
+      preview.innerHTML = "";
+      if (lastPhotoUrl) URL.revokeObjectURL(lastPhotoUrl);
+      const image = document.createElement("img");
+      lastPhotoUrl = URL.createObjectURL(file);
+      image.src = lastPhotoUrl;
+      image.style.maxWidth = "300px";
+      image.style.borderRadius = "10px";
+      preview.appendChild(image);
+
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          const res = await fetch("/upload/image", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ original: reader.result, consent: true })
+          });
+          fileInfo.textContent = res.ok
+            ? "Photo sent - thanks!"
+            : `Upload failed (${(await res.json()).reason || 'error'})`;
+        } catch (e) {
+          fileInfo.textContent = "Upload failed - network error.";
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+
+    /* --- Video --- */
+    const videoInput = document.getElementById("videoInput");
+
+    videoInput.addEventListener("change", () => {
+      const file = videoInput.files?.[0];
+      if (!file) return;
+
+      console.log("File name:", file.name);
+      console.log("File type:", file.type);
+      console.log("File size:", file.size, "bytes");
+      fileInfo.textContent = `${file.name} - ${(file.size / (1024 * 1024)).toFixed(1)} MB - sending...`;
+
+      preview.innerHTML = "";
+      const videoEl = document.createElement("video");
+      videoEl.src = URL.createObjectURL(file);
+      videoEl.controls = true;
+      videoEl.style.maxWidth = "300px";
+      videoEl.style.borderRadius = "10px";
+      preview.appendChild(videoEl);
+
+      const fd = new FormData();
+      fd.append("original", file);
+      fd.append("consent", "true");
+
+      fetch("/upload/video", { method: "POST", body: fd })
+        .then(res => res.json())
+        .then(r => {
+          fileInfo.textContent = r.status === "ok"
+            ? "Video sent - thanks!"
+            : `Upload failed (${r.reason || 'error'})`;
+        })
+        .catch(() => {
+          fileInfo.textContent = "Upload failed - network error.";
+        });
+    });
+  </script>
+</body>
+</html>
